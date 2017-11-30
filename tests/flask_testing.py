@@ -1,8 +1,9 @@
 # help from tutorial: https://www.youtube.com/watch?v=WDh_VQ41kYI&ab_channel=MichaelHerman
-
+# imports app and unittest for testing the server
 from app import app
 import unittest
 
+# tests using a test client which gets a route
 class TestFlask(unittest.TestCase):
 
     # tests to see if status code is 200 for index
