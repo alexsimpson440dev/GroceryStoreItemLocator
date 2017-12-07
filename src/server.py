@@ -3,7 +3,7 @@
 from src.dbManager import Manager
 from src.store import Store
 from src.database import Database
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 import os
 
 MANAGER = Manager()
@@ -24,7 +24,7 @@ items = {'taco':'A5', 'milk':'A2', 'pizza':'A3'}
 def home():
     # if the server posts, information will be retrieved from a form in index.html
     if request.method == 'POST':
-        store_id = 10121
+        '''store_id = 10121
         store_name = 'Cub'
         image_dir = '/static/images/store10121.png'
         dairy_loc = 'A5'
@@ -34,26 +34,14 @@ def home():
         grain_loc = 'A2'
 
         MANAGER.add_store(store_id, store_name, image_dir, dairy_loc, produce_loc, protein_loc,
-                           frozen_loc, grain_loc)
+                           frozen_loc, grain_loc)'''
         store_id = request.form.get('store_id')
-        search_item = request.form.get('search_item')
 
         # tries to find the index of the store id, if there is none and error is caught
         # and resets the home page
         try:
-            groceryStores.index(store_id)
-
-            # tries to find an items location in the 'items' dictionary
-            # excepts a key error if the item is not in the dictionary
-            # will then reset the home page
-            try:
-                pass
-                # store_location = items[search_item]
-                # print(store_location)
-            except KeyError:
-                print('Item Does Not Exist!')
-
-            return render_template('index.html')
+            store_image = MANAGER.get_store(store_id)
+            return render_template('store.html', store_image=store_image)
 
         except ValueError:
             print('Wrong Store Number')
@@ -62,6 +50,12 @@ def home():
     # if the server does not post, index.html is loaded
     else:
         return render_template('index.html')
+
+@app.route('/store', methods=['post', 'get'])
+@app.route('/store.html', methods=['get'])
+def store():
+    return render_template('store.html')
+
 
 # runs app on port 9999 and sets debug to True
 if __name__ == '__main__':
