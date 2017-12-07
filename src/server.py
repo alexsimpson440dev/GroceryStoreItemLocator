@@ -1,7 +1,12 @@
 # imports flask and the os
 # os for setting a secret key
+from src.dbManager import Manager
+from src.store import Store
+from src.database import Database
 from flask import Flask, render_template, request
 import os
+
+MANAGER = Manager()
 
 # sets the app that holds folder information and secret key
 app = Flask(__name__, '/static', static_folder='../static', template_folder='../templates')
@@ -19,6 +24,17 @@ items = {'taco':'A5', 'milk':'A2', 'pizza':'A3'}
 def home():
     # if the server posts, information will be retrieved from a form in index.html
     if request.method == 'POST':
+        store_id = 10121
+        store_name = 'Cub'
+        image_dir = '/static/images/store10121.png'
+        dairy_loc = 'A5'
+        produce_loc = 'A3'
+        protein_loc = 'A4'
+        frozen_loc = 'A1'
+        grain_loc = 'A2'
+
+        MANAGER.add_store(store_id, store_name, image_dir, dairy_loc, produce_loc, protein_loc,
+                           frozen_loc, grain_loc)
         store_id = request.form.get('store_id')
         search_item = request.form.get('search_item')
 
@@ -31,8 +47,9 @@ def home():
             # excepts a key error if the item is not in the dictionary
             # will then reset the home page
             try:
-                store_location = items[search_item]
-                print(store_location)
+                pass
+                # store_location = items[search_item]
+                # print(store_location)
             except KeyError:
                 print('Item Does Not Exist!')
 

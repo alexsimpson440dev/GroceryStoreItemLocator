@@ -1,7 +1,5 @@
-# data model for the store table
-
 class Store(object):
-    def __int__(self, store_id, store_name, image_dir, dairy_loc, produce_loc, protein_loc, frozen_loc, grain_loc):
+    def __init__(self, store_id, store_name, image_dir, dairy_loc, produce_loc, protein_loc, frozen_loc, grain_loc):
         self.store_id = store_id
         self.store_name = store_name
         self.image_dir = image_dir
