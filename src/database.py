@@ -39,10 +39,18 @@ class Database():
         session.add(store)
         session.commit()
 
-    def _search_store(self, search_item):
+    def _search_store(self, store_id):
         session = self._get_session()
         for store in session.query(Store)\
-            .filter(Store.store_id == search_item):
+            .filter(Store.store_id == store_id):
             session.commit()
-            return store.image_dir
+            if store.store_id is None:
+                return None
+            else:
+                return store.image_dir
 
+    def _search_store_name(self, store_id):
+        session = self._get_session()
+        for store in session.query(Store)\
+            .filter(Store.store_id == store_id):
+            return store.store_name

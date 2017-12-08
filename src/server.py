@@ -3,7 +3,7 @@
 from src.dbManager import Manager
 from src.store import Store
 from src.database import Database
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, redirect
 import os
 
 MANAGER = Manager()
@@ -35,13 +35,19 @@ def home():
 
         MANAGER.add_store(store_id, store_name, image_dir, dairy_loc, produce_loc, protein_loc,
                            frozen_loc, grain_loc)'''
-        store_id = request.form.get('store_id')
 
+        # gets the store_id searched in html form
+        store_id = request.form.get('store_id')
         # tries to find the index of the store id, if there is none and error is caught
         # and resets the home page
         try:
-            store_image = MANAGER.get_store(store_id)
-            return render_template('store.html', store_image=store_image)
+            store_image = MANAGER.get_store_image(store_id)
+            if store_image is None:
+                print('No store found!')
+                return redirect('index.html')
+            else:
+                # verify_store_id = MANAGER.check_store_id(store_id)
+                return render_template('index.html', store_id=store_id)
 
         except ValueError:
             print('Wrong Store Number')
@@ -51,10 +57,13 @@ def home():
     else:
         return render_template('index.html')
 
-@app.route('/store', methods=['post', 'get'])
-@app.route('/store.html', methods=['get'])
+@app.route('/store/store_id=14333', methods=['get'])
 def store():
-    return render_template('store.html')
+    store_id = 14333
+    if request.method == 'GET':
+        store_map = MANAGER.get_store_image(store_id)
+        store_name = MANAGER.get_store_name(store_id)
+        return render_template('store.html', store_map=store_map, store_id=store_id, store_name=store_name)
 
 
 # runs app on port 9999 and sets debug to True

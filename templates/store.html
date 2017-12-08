@@ -5,11 +5,13 @@
     <title>Store Home</title>
 </head>
 <body>
+    <h1>Store Item Locator</h1>
     <form action="/store" method="post">
         <input type="text" name="item" placeholder="search items"><br>
         <input type="submit" value="Search">
     </form>
     <br>
-    <img src="{{ store_image }}">
+    <h2>{{ store_id }}: {{ store_name }}</h2>
+    <img src="{{ store_map }}">
 </body>
 </html>
