@@ -24,18 +24,6 @@ items = {'taco':'A5', 'milk':'A2', 'pizza':'A3'}
 def home():
     # if the server posts, information will be retrieved from a form in index.html
     if request.method == 'POST':
-        '''store_id = 10121
-        store_name = 'Cub'
-        image_dir = '/static/images/store10121.png'
-        dairy_loc = 'A5'
-        produce_loc = 'A3'
-        protein_loc = 'A4'
-        frozen_loc = 'A1'
-        grain_loc = 'A2'
-
-        MANAGER.add_store(store_id, store_name, image_dir, dairy_loc, produce_loc, protein_loc,
-                           frozen_loc, grain_loc)'''
-
         # gets the store_id searched in html form
         store_id = request.form.get('store_id')
         # tries to find the index of the store id, if there is none and error is caught
@@ -57,9 +45,9 @@ def home():
     else:
         return render_template('index.html')
 
-@app.route('/store/store_id=14333', methods=['get'])
+@app.route('/store/store_id=10121', methods=['get'])
 def store():
-    store_id = 14333
+    store_id = 10121
     if request.method == 'GET':
         store_map = MANAGER.get_store_image(store_id)
         store_name = MANAGER.get_store_name(store_id)

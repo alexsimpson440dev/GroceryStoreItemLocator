@@ -16,13 +16,7 @@ class Database():
         store = Table('Store', METADATA,
             Column('store_id', Integer, primary_key=True),
             Column('store_name', String),
-            Column('image_dir', String),
-            Column('dairy_loc', String),
-            Column('produce_loc', String),
-            Column('protein_loc', String),
-            Column('frozen_loc', String),
-            Column('grain_loc', String)
-            )
+            Column('image_dir', String))
         mapper(Store, store)
         return store
 
