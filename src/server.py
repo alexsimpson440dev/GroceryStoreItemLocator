@@ -12,11 +12,6 @@ MANAGER = Manager()
 app = Flask(__name__, '/static', static_folder='../static', template_folder='../templates')
 app.secret_key = os.urandom(24)
 
-# a list and dictionary for testing some basic logic in the application
-# todo: move this information to a database
-groceryStores = ['12331', '14333', '19882', '22314']
-items = {'taco':'A5', 'milk':'A2', 'pizza':'A3'}
-
 # sets route for the home page and methods used
 @app.route('/')
 @app.route('/index', methods=['get', 'post'])
