@@ -6,8 +6,8 @@ class Store(object):
 
 
     def __repr__(self):
-        return '{sid}:{sn} - {id} \n' \
-               .format(sid=self.store_id, sn=self.store_name, id=self.image_file)
+        return '{sid}:{sn} - {id}' \
+               .format(sid=self.store_id, sn=self.store_name, id=self.image_dir)
 
     def __str__(self):
         return self.__repr__()

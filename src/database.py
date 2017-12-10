@@ -1,8 +1,9 @@
 import sqlite3
 from src.store import Store
 from src.items import Items
-from sqlalchemy import Table, MetaData, Column, Integer, String, create_engine
-from sqlalchemy.orm import mapper, sessionmaker
+from src.location import Location
+from sqlalchemy import Table, MetaData, Column, Integer, String, ForeignKey, create_engine
+from sqlalchemy.orm import mapper, sessionmaker, relationship
 
 METADATA = MetaData()
 
@@ -12,6 +13,7 @@ class Database():
         self.engine = self._get_connection()
         self.store = self._map_store()
         self.items = self._map_items()
+        self.location = self._map_location()
         METADATA.create_all(bind=self.engine)
 
     def _map_store(self):
@@ -28,9 +30,17 @@ class Database():
             Column('item_brand', String),
             Column('item_name', String),
             Column('item_category', String),
-            Column('item_location', String))
+            Column('loc_id', Integer, ForeignKey('Location')))
         mapper(Items, items)
         return items
+
+    def _map_location(self):
+        location = Table('Location', METADATA,
+                         Column('location_id', Integer, primary_key=True),
+                         Column('location', String))
+        mapper(Location, location, properties={'loc_id': relationship(Location, backref='Items')})
+        return location
+
 
     def _get_connection(self):
         engine = create_engine(self.sqlite_file)
@@ -48,6 +58,11 @@ class Database():
     def _add_item(self, item):
         session = self._get_session()
         session.add(item)
+        session.commit()
+
+    def _add_location(self, loc):
+        session = self._get_session()
+        session.add(loc)
         session.commit()
 
     def _search_store(self, store_id):
