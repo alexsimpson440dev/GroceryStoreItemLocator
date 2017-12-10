@@ -53,12 +53,12 @@ def store():
 @app.route('/_temp_add_items.html', methods=['get'])
 def add_items():
     if request.method == 'POST':
-        #location_id = request.form.get('item_brand')
-        location = request.form.get('location')
-        #category = request.form.get('item_category')
-        #location = request.form.get('item_location')
+        item_brand = request.form.get('item_brand')
+        item_name = request.form.get('item_name')
+        item_category = request.form.get('item_category')
+        loc_id = request.form.get('loc_id')
 
-        MANAGER.add_location(location)
+        MANAGER.add_item(item_brand, item_name, item_category, loc_id)
         return render_template('_temp_add_items.html')
 
     else:

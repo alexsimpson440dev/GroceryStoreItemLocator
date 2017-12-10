@@ -30,15 +30,15 @@ class Database():
             Column('item_brand', String),
             Column('item_name', String),
             Column('item_category', String),
-            Column('loc_id', Integer, ForeignKey('Location')))
+            Column('loc_id', Integer, ForeignKey('Location.location_id')))
         mapper(Items, items)
         return items
 
     def _map_location(self):
         location = Table('Location', METADATA,
                          Column('location_id', Integer, primary_key=True),
-                         Column('location', String))
-        mapper(Location, location, properties={'loc_id': relationship(Location, backref='Items')})
+                         Column('location_name', String))
+        mapper(Location, location, properties={'loc_id': relationship(Items, backref='Location')})
         return location
 
 
@@ -60,9 +60,9 @@ class Database():
         session.add(item)
         session.commit()
 
-    def _add_location(self, loc):
+    def _add_location(self, location_name):
         session = self._get_session()
-        session.add(loc)
+        session.add(location_name)
         session.commit()
 
     def _search_store(self, store_id):
