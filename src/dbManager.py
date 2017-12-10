@@ -1,12 +1,17 @@
 from src.database import Database
 from src.store import Store
+from src.items import Items
 class Manager():
     def __init__(self):
         self.database = Database()
 
-    def add_store(self, store_id, store_name, image_dir, dairy_loc, produce_loc, protein_loc, frozen_loc, grain_loc):
-        store = Store(store_id, store_name, image_dir, dairy_loc, produce_loc, protein_loc, frozen_loc, grain_loc)
+    def add_store(self, store_id, store_name, image_dir):
+        store = Store(store_id, store_name, image_dir)
         self.database._add_store(store)
+
+    def add_item(self, item_brand, item_name, item_category, item_location):
+        item = Items(item_brand, item_name, item_category, item_location)
+        self.database._add_item(item)
 
     def get_store_image(self, store_id):
         picture = self.database._search_store(store_id)
