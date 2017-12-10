@@ -1,6 +1,7 @@
 # imports flask and the os
 # os for setting a secret key
 from src.dbManager import Manager
+from src.items import Items
 from src.store import Store
 from src.database import Database
 from flask import Flask, render_template, request, redirect
@@ -48,6 +49,20 @@ def store():
         store_name = MANAGER.get_store_name(store_id)
         return render_template('store.html', store_map=store_map, store_id=store_id, store_name=store_name)
 
+@app.route('/_temp_add_items', methods=['post'])
+@app.route('/_temp_add_items.html', methods=['get'])
+def add_items():
+    if request.method == 'POST':
+        brand = request.form.get('item_brand')
+        name = request.form.get('item_name')
+        category = request.form.get('item_category')
+        location = request.form.get('item_location')
+
+        MANAGER.add_item(brand, name, category, location)
+        return render_template('_temp_add_items.html')
+
+    else:
+        return render_template('_temp_add_items.html')
 
 # runs app on port 9999 and sets debug to True
 if __name__ == '__main__':
