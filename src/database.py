@@ -80,3 +80,11 @@ class Database():
         for store in session.query(Store)\
             .filter(Store.store_id == store_id):
             return store.store_name
+
+    def _search_store_items(self, search_item):
+        items_list = list()
+        session = self._get_session()
+        for items in session.query(Items.item_brand, Items.item_name)\
+            .filter(Items.item_name.ilike('%'+search_item+'%')):
+            items_list.append(items)
+        return items_list

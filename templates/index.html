@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+<link href="../static/styles/index.css" rel="stylesheet" type="text/css" />
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
 </head>
 <body>
+    <div id="index">
     <h1>Store Item Locator</h1>
     <form action="/index" method="post">
         <input type="text" name="store_id" placeholder="store number"><br>
@@ -13,5 +15,6 @@
     <br>
     <a href="_temp_add_items.html">add items</a>
     <a href="store/store_id={{ store_id }}">{{ store_id }}</a>
+    </div>
 </body>
 </html>

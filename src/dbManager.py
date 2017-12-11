@@ -26,3 +26,7 @@ class Manager():
     def get_store_name(self, store_id):
         name = self.database._search_store_name(store_id)
         return name
+
+    def search_items_by_name(self, search_item):
+        returned_items = self.database._search_store_items(search_item)
+        return returned_items
