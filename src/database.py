@@ -92,10 +92,16 @@ class Database():
             return store.store_name
 
     # queries the items table for the item name and brand to display to user
+    # loops table for the brand, name, and item location id
+    # sets a list to those values for each that is like the item given, then loops them into a dictionary with a key that counts
     def _search_store_items(self, search_item):
-        items_list = list()
+        counter = 1
+        items_dict = dict()
         session = self._get_session()
-        for items in session.query(Items.item_brand, Items.item_name)\
+        for brand, name, loc in session.query(Items.item_brand, Items.item_name, Items.loc_id)\
             .filter(Items.item_name.ilike('%'+search_item+'%')):
-            items_list.append(items)
-        return items_list
+            items_list = [brand, name, loc]
+            for i in items_list:
+                items_dict.setdefault(counter, []).append(i)
+            counter+=1
+        return items_dict

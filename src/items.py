@@ -11,7 +11,7 @@ class Items(object):
     def __repr__(self):
         return '{iid}:{ib} {ina} \n'\
                      '{ic} - {lid}'\
-               .format(iid=self.item_id, ib=self.item_brand, ina=self.item_name, ic=self.item_category, lid=self.location_id)
+               .format(iid=self.item_id, ib=self.item_brand, ina=self.item_name, ic=self.item_category, lid=self.loc_id)
 
     def __str__(self):
         return self.__repr__()

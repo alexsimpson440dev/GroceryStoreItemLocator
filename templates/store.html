@@ -12,6 +12,20 @@
     </form>
     <br>
     <h2>{{ store_id }}: {{ store_name }}</h2>
+    <table>
+        <tr>
+            <th>Brand</th>
+            <th>Name</th>
+            <th>Location ID</th>
+        </tr>
+        {% for key in returned_items %}
+            <tr>
+                {% for value in returned_items[key] %}
+                    <td>{{ value }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
     <img src="{{ store_map }}">
 </body>
 </html>

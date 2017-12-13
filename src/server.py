@@ -53,8 +53,7 @@ def store():
     if request.method == 'POST':
         search_item = request.form.get('search_item')
         returned_items = MANAGER.search_items_by_name(search_item)
-        print(returned_items)
-        return render_template('store.html', store_map=store_map, store_id=store_id, store_name=store_name)
+        return render_template('store.html', store_map=store_map, store_id=store_id, store_name=store_name, returned_items=returned_items)
     #else, the page will just post information to the page
     else:
         return render_template('store.html', store_map=store_map, store_id=store_id, store_name=store_name)
