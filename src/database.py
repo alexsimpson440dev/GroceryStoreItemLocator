@@ -98,8 +98,9 @@ class Database():
         counter = 1
         items_dict = dict()
         session = self._get_session()
-        for brand, name, loc in session.query(Items.item_brand, Items.item_name, Items.loc_id)\
-            .filter(Items.item_name.ilike('%'+search_item+'%')):
+        for brand, name, loc in session.query(Items.item_brand, Items.item_name, Location.location_name)\
+            .filter(Items.item_name.ilike('%'+search_item+'%'))\
+            .filter(Location.location_id==Items.loc_id):
             items_list = [brand, name, loc]
             for i in items_list:
                 items_dict.setdefault(counter, []).append(i)

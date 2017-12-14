@@ -12,11 +12,11 @@
     </form>
     <br>
     <h2>{{ store_id }}: {{ store_name }}</h2>
-    <table>
+    <table border="1px solid black">
         <tr>
             <th>Brand</th>
             <th>Name</th>
-            <th>Location ID</th>
+            <th>Location</th>
             <th>Add Item to List</th>
         </tr>
         {% for key in returned_items %}
@@ -24,7 +24,27 @@
                 {% for value in returned_items[key] %}
                     <td>{{ value }}</td>
                 {% endfor %}
-                <td><input type="button" value="Add"></td>
+                <td>
+                    <form action="/add" method="post">
+                        <input type="hidden" name="item" value="{{returned_items[key]}}">
+                        <input type="submit" value="Add">
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <table border="1px solid black">
+        <tr>
+            <th>Brand</th>
+            <th>Name</th>
+            <th>Location</th>
+        </tr>
+        {% for item in cart %}
+            <tr>
+                {% for b in item.split("|") %}
+                    <td>{{ b }}</td>
+                {% endfor %}
             </tr>
         {% endfor %}
     </table>

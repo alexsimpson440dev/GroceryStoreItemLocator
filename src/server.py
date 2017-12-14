@@ -48,15 +48,17 @@ def store():
     store_id = 10121
     store_map = MANAGER.get_store_image(store_id)
     store_name = MANAGER.get_store_name(store_id)
+    cart = shopping_list(None)
     #if the page requests a post, it will search for the item placed in database
     #todo: show the user the results
     if request.method == 'POST':
+        # todo: get information from the get in order to add an item to a list
         search_item = request.form.get('search_item')
         returned_items = MANAGER.search_items_by_name(search_item)
-        return render_template('store.html', store_map=store_map, store_id=store_id, store_name=store_name, returned_items=returned_items)
+        return render_template('store.html', store_map=store_map, store_id=store_id, store_name=store_name, returned_items=returned_items, cart=cart)
     #else, the page will just post information to the page
     else:
-        return render_template('store.html', store_map=store_map, store_id=store_id, store_name=store_name)
+        return render_template('store.html', store_map=store_map, store_id=store_id, store_name=store_name, cart=cart)
 
 #temp route for adding items
 @app.route('/_temp_add_items', methods=['post'])
@@ -73,6 +75,26 @@ def add_items():
 
     else:
         return render_template('_temp_add_items.html')
+
+@app.route('/add', methods=['get', 'post'])
+def test():
+    if request.method == 'POST':
+        item = request.form.get('item')
+        shopping_list(item)
+        return redirect('store/store_id=10121')
+
+def shopping_list(item, cart=list()):
+    if item == None:
+        return cart
+    else:
+        name = item
+        name = name.replace("[", "")
+        name = name.replace(']', "")
+        name = name.replace("',", '|')
+        name = name.replace("'", "")
+        name = name.replace("| ", "|")
+        cart.append(name)
+        return cart
 
 # runs app on port 9999 and sets debug to True
 if __name__ == '__main__':
